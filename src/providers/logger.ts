@@ -15,6 +15,7 @@ const streams: any = () => {
             stream: pino.destination(
                 `${env.app.root_dir}/storage/logs/app-${level}.log`
             ),
+            frequency: 'daily',
         };
     });
 
@@ -30,7 +31,7 @@ const streams: any = () => {
 
 const logger = pino(
     {
-        level: process.env.PINO_LOG_LEVEL || 'info',
+        level: 'info',
         customLevels: levels,
         useOnlyCustomLevels: true,
         formatters: {

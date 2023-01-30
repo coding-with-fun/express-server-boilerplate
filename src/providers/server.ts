@@ -11,7 +11,7 @@ const Server = (app: Application) => {
      */
     const start = async () => {
         server.listen(env.app.port);
-        logger.info('Server Listening on port:' + env.app.port);
+        logger.info(`Server listening on port: ${env.app.port}...`);
         server.on('error', onError);
     };
 

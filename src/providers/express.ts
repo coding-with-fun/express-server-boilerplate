@@ -3,6 +3,8 @@ import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import { i18n } from 'i18next';
+import middleware from 'i18next-http-middleware';
 import env from '../env';
 
 const Express = () => {
@@ -19,7 +21,7 @@ const Express = () => {
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(express.static(env.app.root_dir + '/public'));
         app.use(
-            env.app.user_uploaded_content_path,
+            env.api.user_uploaded_content_path,
             express.static(env.app.root_dir + '/storage/uploads/')
         );
         app.use(helmet());
@@ -35,10 +37,18 @@ const Express = () => {
         app.set('views', env.app.root_dir + '/views/');
     };
 
+    const configureLocale = (
+        i18Middleware: typeof middleware,
+        i18next: i18n
+    ) => {
+        app.use(i18Middleware.handle(i18next));
+    };
+
     return {
         app,
         initializeApp,
         configureViews,
+        configureLocale,
     };
 };
 
