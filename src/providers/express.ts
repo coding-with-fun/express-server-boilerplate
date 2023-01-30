@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { i18n } from 'i18next';
 import middleware from 'i18next-http-middleware';
 import env from '../env';
+import router from '../routes/api/api';
 
 const Express = () => {
     const app = express();
@@ -35,6 +36,7 @@ const Express = () => {
     const configureViews = () => {
         app.set('view engine', 'hbs');
         app.set('views', env.app.root_dir + '/views/');
+        app.use(`${env.api.api_prefix}`, router);
     };
 
     const configureLocale = (

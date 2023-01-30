@@ -1,13 +1,14 @@
 import i18next from 'i18next';
 import middleware from 'i18next-http-middleware';
-import FsBackend, { FsBackendOptions } from 'i18next-fs-backend';
+import Backend from 'i18next-fs-backend';
 import env from '../env';
+import logger from './logger';
 
 const initializeLocales = () => {
     i18next
         .use(middleware.LanguageDetector)
-        .use(FsBackend)
-        .init<FsBackendOptions>({
+        .use(Backend)
+        .init({
             preload: ['en'],
             supportedLngs: ['en'],
             lng: 'en',
@@ -21,6 +22,8 @@ const initializeLocales = () => {
             },
             fallbackLng: 'en',
         });
+
+    logger.info('LOGGER INITIALIZED');
 
     return {
         i18next: i18next,
