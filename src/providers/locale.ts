@@ -9,12 +9,10 @@ const initializeLocales = () => {
         .use(middleware.LanguageDetector)
         .use(Backend)
         .init({
-            preload: ['en'],
-            supportedLngs: ['en'],
+            preload: ['en', 'ar'],
+            supportedLngs: ['en', 'ar'],
             lng: 'en',
-            saveMissing: true,
             nonExplicitSupportedLngs: false,
-            // debug: env.node !== 'production' ? true : false,
             backend: {
                 loadPath: env.app.root_dir + '/locales/{{lng}}/{{ns}}.json',
                 addPath:
@@ -23,11 +21,11 @@ const initializeLocales = () => {
             fallbackLng: 'en',
         });
 
-    logger.info('LOGGER INITIALIZED');
+    logger.info('LOCALE INITIALIZED');
 
     return {
         i18next: i18next,
-        i18Middleware: middleware,
+        middleware: middleware,
     };
 };
 

@@ -12,7 +12,7 @@ const ResponseHandler = (
     let message = _.get(data, 'message', '');
 
     if (error instanceof Error) {
-        message = req.t(_.get(error, 'message')) || 'error.somethingWentWrong';
+        message = _.get(error, 'message') || 'Something went wrong.';
         logger.error(message);
 
         success = false;
@@ -21,7 +21,7 @@ const ResponseHandler = (
     return res.json({
         ...data,
         success,
-        message: req.t(message),
+        message,
     });
 };
 

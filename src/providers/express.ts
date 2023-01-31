@@ -4,7 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import { i18n } from 'i18next';
-import middleware from 'i18next-http-middleware';
+import { RequestLogger } from '../app/http/middleware/RequestLogger';
 import env from '../env';
 import router from '../routes/api/api';
 
@@ -36,14 +36,11 @@ const Express = () => {
     const configureViews = () => {
         app.set('view engine', 'hbs');
         app.set('views', env.app.root_dir + '/views/');
-        app.use(`${env.api.api_prefix}`, router);
+        app.use(`${env.api.api_prefix}`, RequestLogger, router);
     };
 
-    const configureLocale = (
-        i18Middleware: typeof middleware,
-        i18next: i18n
-    ) => {
-        app.use(i18Middleware.handle(i18next));
+    const configureLocale = (middleware: any, i18next: i18n) => {
+        app.use(middleware.handle(i18next));
     };
 
     return {

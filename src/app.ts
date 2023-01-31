@@ -1,5 +1,3 @@
-import { i18n } from 'i18next';
-import middleware from 'i18next-http-middleware';
 import cronSetup from './providers/cron';
 import Express from './providers/express';
 import initializeLocales from './providers/locale';
@@ -7,18 +5,12 @@ import logger from './providers/logger';
 import Server from './providers/server';
 
 const express = Express();
-const {
-    i18Middleware,
-    i18next,
-}: {
-    i18Middleware: typeof middleware;
-    i18next: i18n;
-} = initializeLocales();
+const { middleware, i18next } = initializeLocales();
 
 Promise.all([
     express.initializeApp(),
     express.configureViews(),
-    express.configureLocale(i18Middleware, i18next),
+    express.configureLocale(middleware, i18next),
 ]).then(async () => {
     const app = express.app;
 
